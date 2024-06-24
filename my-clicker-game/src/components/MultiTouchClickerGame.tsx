@@ -16,22 +16,24 @@ const MultiTouchClickerGame: React.FC = () => {
     const [totalScore, setTotalScore] = useState<number>(0);
 
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+        event.preventDefault(); // Запобігаємо типовій поведінці торкання
+
         const touches = event.touches;
 
-        // Get the coin container's position relative to the viewport
+        // Отримуємо позицію контейнера монети відносно видимої частини екрану
         const coinRect = event.currentTarget.getBoundingClientRect();
 
-        // Create an array of new touch points with unique ids
+        // Створюємо масив нових точок торкання з унікальними ідентифікаторами
         const newTouchPoints: TouchPoint[] = Array.from(touches).map((touch, index) => ({
             id: Date.now() + index,
             x: touch.clientX - coinRect.left,
             y: touch.clientY - coinRect.top,
         }));
 
-        // Update state with the list of touch points
+        // Оновлюємо стан зі списком точок торкання
         setTouchPoints((prevTouchPoints) => [...prevTouchPoints, ...newTouchPoints]);
 
-        // Increase the current score based on the number of touches
+        // Збільшуємо поточний рахунок на основі кількості торкань
         setCurrentScore((prevScore) => {
             const newScore = prevScore + touches.length;
             setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
@@ -39,12 +41,13 @@ const MultiTouchClickerGame: React.FC = () => {
         });
     };
 
+
     return (
         <div className={styles.gameContainer}>
             <Header />
 
             <div className={styles.buttonContainer} onTouchStart={handleTouchStart}>
-                <button className={styles.coinButton}>
+                <div className={styles.coinButton}>
                     <div className={styles.coinContainer}>
                         <Image
                             className={styles.coin}
@@ -64,7 +67,7 @@ const MultiTouchClickerGame: React.FC = () => {
                             </div>
                         ))}
                     </div>
-                </button>
+                </div>
             </div>
             <div className={styles.totalScore}>
                 Denchik COIN:

@@ -11,16 +11,15 @@
     transform: scale(1.5);
     background: none;
     border: none;
-    margin-top: 100px;
-    margin-bottom: 105px;
+    user-select: none; /* Вимикає виділення тексту */
+    outline: none; /* Вимикає межу фокусу */
+    margin: 100px;
 
 }
 
 .coinContainer {
     position: relative;
-    width: 100px; /* Збільшення ширини контейнера монети */
-    height: 100px; /* Збільшення висоти контейнера монети */
-    overflow: visible; /* Показуємо зміст, що виходить за межі контейнера */
+    overflow: visible;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,7 +40,9 @@
     position: relative;
     width: 100px; /* Збільшення ширини кнопки */
     height: 100px; /* Збільшення висоти кнопки */
-    overflow: visible; /* Показуємо зміст, що виходить за межі кнопки */
+    overflow: visible;
+    -webkit-tap-highlight-color: transparent; /* Вимикає підсвічування при торканні */
+
 }
 
 .touchPoint {
@@ -104,6 +105,6 @@
     margin: 0 auto;
     padding: 0;
     font-weight: bold;
-    font-size: 44px;
+    font-size: 22px;
     color: white;
 }

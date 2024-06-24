@@ -13,6 +13,8 @@
 html {
   --global_margin: 5px;
   user-select: none; /* Standard */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Стандарт для браузерів на основі WebKit */
+  tap-highlight-color: rgba(0, 0, 0, 0); /* Сучасні стандарти */
 }
 html,
 body {

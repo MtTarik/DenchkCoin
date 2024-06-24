@@ -6,7 +6,7 @@ const Header = () =>{
         <div className={styles.containerHeader}>
             <h1 className={styles.title}>Коін для повернення боргів корішу!</h1>
             <div>
-                <p>Добувай Denchk COIN якщо нема що отдать а він вийобуеться</p>
+                <p className={styles.parag}>Добувай Denchk COIN якщо нема що отдать а він вийобуеться</p>
 
             </div>
         </div>
