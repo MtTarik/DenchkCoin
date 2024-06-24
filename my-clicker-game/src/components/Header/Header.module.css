@@ -1,0 +1,11 @@
+.containerHeader{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.title{
+    font-size: 22px;
+    color: white;
+}
