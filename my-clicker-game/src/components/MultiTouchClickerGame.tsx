@@ -61,7 +61,7 @@ const MultiTouchClickerGame: React.FC = () => {
                             <div
                                 key={point.id}
                                 className={styles.touchPoint}
-                                style={{left: point.x - 60, top: point.y - 50}}
+                                style={{left: point.x - 80, top: point.y - 79}}
                             >
                                 +1
                             </div>

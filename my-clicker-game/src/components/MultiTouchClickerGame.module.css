@@ -37,8 +37,8 @@
     border: none;
     padding: 0;
     position: relative;
-    width: 170px; /* Збільшення ширини кнопки */
-    height: 100px; /* Збільшення висоти кнопки */
+    width: 200px; /* Збільшення ширини кнопки */
+    height: 130px; /* Збільшення висоти кнопки */
     overflow: visible;
     -webkit-tap-highlight-color: transparent; /* Вимикає підсвічування при торканні */
 
@@ -62,7 +62,7 @@
     }
     100% {
         opacity: 0;
-        transform: translateY(-30px); /* Рух вгору на 30px */
+        transform: translateY(-100px); /* Рух вгору на 30px */
     }
 }
 
