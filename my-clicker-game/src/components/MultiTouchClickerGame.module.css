@@ -11,9 +11,9 @@
     transform: scale(1.5);
     background: none;
     border: none;
-    user-select: none; /* Вимикає виділення тексту */
-    outline: none; /* Вимикає межу фокусу */
-    margin: 100px;
+    user-select: none;
+    outline: none;
+    margin: 22px;
 
 }
 
@@ -30,15 +30,14 @@
     width: 100%;
     height: 100%;
     animation: float 4s ease-in-out infinite;
-    /* text-shadow: 4px 4px #5c1515; */
-    text-shadow: 0px 1px aliceblue, 5px 5px 5px rgba(140, 148, 160, 0.479);
+    text-shadow: 0 1px aliceblue, 5px 5px 5px rgba(140, 148, 160, 0.479);
 }
 .coinButton {
     background: none;
     border: none;
     padding: 0;
     position: relative;
-    width: 100px; /* Збільшення ширини кнопки */
+    width: 170px; /* Збільшення ширини кнопки */
     height: 100px; /* Збільшення висоти кнопки */
     overflow: visible;
     -webkit-tap-highlight-color: transparent; /* Вимикає підсвічування при торканні */
@@ -47,10 +46,10 @@
 
 .touchPoint {
     position: absolute;
-    top: -30px; /* Зсув вгору на 30px від місця торкання */
+    top: 100px; /* Зсув вгору на 30px від місця торкання */
     left: 50%; /* Центруємо очко по горизонталі */
     transform: translateX(-50%); /* Центруємо очко по горизонталі */
-    font-size: 22px; /* Розмір тексту очка +1 */
+    font-size: 30px; /* Розмір тексту очка +1 */
     color: #ffffff;
     font-weight: bold;
     animation: flyUp 1s ease-out forwards;
@@ -102,8 +101,7 @@
 }
 
 .totalScore{
-    margin: 0 auto;
-    padding: 0;
+    margin-top: 150px;
     font-weight: bold;
     font-size: 22px;
     color: white;

@@ -9,7 +9,6 @@ interface TouchPoint {
     x: number;
     y: number;
 }
-
 const MultiTouchClickerGame: React.FC = () => {
     const [currentScore, setCurrentScore] = useState<number>(0);
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
@@ -24,6 +23,7 @@ const MultiTouchClickerGame: React.FC = () => {
         const coinRect = event.currentTarget.getBoundingClientRect();
 
         // Створюємо масив нових точок торкання з унікальними ідентифікаторами
+
         const newTouchPoints: TouchPoint[] = Array.from(touches).map((touch, index) => ({
             id: Date.now() + index,
             x: touch.clientX - coinRect.left,
@@ -61,7 +61,7 @@ const MultiTouchClickerGame: React.FC = () => {
                             <div
                                 key={point.id}
                                 className={styles.touchPoint}
-                                style={{left: point.x - 60, top: point.y - 60}}
+                                style={{left: point.x - 60, top: point.y - 50}}
                             >
                                 +1
                             </div>
@@ -70,10 +70,7 @@ const MultiTouchClickerGame: React.FC = () => {
                 </div>
             </div>
             <div className={styles.totalScore}>
-                Denchik COIN:
-            </div>
-            <div className={styles.totalScore}>
-                DHT: {totalScore} scam product LOL
+                DHT: {totalScore}
             </div>
         </div>
     );
