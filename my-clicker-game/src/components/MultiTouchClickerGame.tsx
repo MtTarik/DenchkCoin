@@ -4,6 +4,8 @@ import Image from 'next/image';
 import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
 import {
+    ImpactOccurredFunction,
+    NotificationOccurredFunction,
     useHapticFeedback,
 } from '@altiore/twa';
 
@@ -18,7 +20,8 @@ const MultiTouchClickerGame: React.FC = () => {
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
 
-    const { impactOccurred, notificationOccurred, selectionChanged } = useHapticFeedback();
+    const { impactOccurred } = useHapticFeedback(); // Тільки отримуємо impactOccurred
+    const [style, setStyle] = useState<'light' | 'medium' | 'heavy' | 'rigid' | 'soft'>('light');
 
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         event.preventDefault();
@@ -39,23 +42,17 @@ const MultiTouchClickerGame: React.FC = () => {
             setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
             return newScore;
         });
-        impactOccurred('heavy'); notificationOccurred('success');
 
+        impactOccurred(style); // Викликаємо impactOccurred при натисканні
     };
-
-    const handleTouchEnd = () => {
-        // Trigger notification feedback with current style state
-        notificationOccurred('success');
-    };
-
 
     return (
         <div className={styles.gameContainer}>
 
             <Header />
 
-            <div className={styles.buttonContainer} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-                <div className={styles.coinButton}>
+            <div className={styles.buttonContainer}>
+                <div className={styles.coinButton} onTouchStart={handleTouchStart}>
                     <div className={styles.coinContainer}>
                         <Image
                             className={styles.coin}
@@ -75,7 +72,6 @@ const MultiTouchClickerGame: React.FC = () => {
                             </div>
                         ))}
                     </div>
-
                 </div>
             </div>
 
