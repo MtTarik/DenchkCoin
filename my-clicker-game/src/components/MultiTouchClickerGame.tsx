@@ -1,9 +1,13 @@
 "use client"
-import {useEffect, useState} from 'react';
+import { useState} from 'react';
 import Image from 'next/image';
 import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
-
+import {
+    ImpactOccurredFunction,
+    NotificationOccurredFunction,
+    useHapticFeedback,
+} from '@vkruglikov/react-telegram-web-app';
 interface TouchPoint {
     id: number;
     x: number;
@@ -14,19 +18,9 @@ const MultiTouchClickerGame: React.FC = () => {
     const [currentScore, setCurrentScore] = useState<number>(0);
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
-    useEffect(() => {
-        const preventZoomAndScroll = (event: TouchEvent) => {
-            if (event.touches.length > 1) {
-                event.preventDefault();
-            }
-        };
 
-        document.addEventListener('touchmove', preventZoomAndScroll, { passive: false });
+    const { impactOccurred, notificationOccurred } = useHapticFeedback();
 
-        return () => {
-            document.removeEventListener('touchmove', preventZoomAndScroll);
-        };
-    }, []);
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         event.preventDefault();
 
@@ -47,9 +41,9 @@ const MultiTouchClickerGame: React.FC = () => {
             return newScore;
         });
 
-        if (navigator.vibrate) {
-            navigator.vibrate(50); // Вібрація на 50 мс
-        }
+        // Виклик тактильного зворотного зв'язку
+        impactOccurred(); // Відчуття удару
+        notificationOccurred(); // Відчуття сповіщення
     };
 
     return (
