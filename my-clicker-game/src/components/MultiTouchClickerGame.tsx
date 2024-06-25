@@ -21,7 +21,6 @@ const MultiTouchClickerGame: React.FC = () => {
     const [totalScore, setTotalScore] = useState<number>(0);
 
     const { impactOccurred } = useHapticFeedback(); // Тільки отримуємо impactOccurred
-    const [style, setStyle] = useState<'light' | 'medium' | 'heavy' | 'rigid' | 'soft'>('light');
 
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         event.preventDefault();
@@ -43,7 +42,7 @@ const MultiTouchClickerGame: React.FC = () => {
             return newScore;
         });
 
-        impactOccurred(style); // Викликаємо impactOccurred при натисканні
+        impactOccurred('heavy'); // Викликаємо impactOccurred при натисканні
     };
 
     return (
