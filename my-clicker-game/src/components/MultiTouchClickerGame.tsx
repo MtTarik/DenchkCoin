@@ -6,7 +6,7 @@ import Header from "@/components/Header/Header";
 import {
     ImpactOccurredFunction,
     useHapticFeedback,
-} from '@altiore/twa';
+} from '@vkruglikov/react-telegram-web-app';
 
 interface TouchPoint {
     id: number;
@@ -31,9 +31,7 @@ const MultiTouchClickerGame: React.FC = () => {
         }));
 
         setTouchPoints(newTouchPoints);
-
-        // Викликаємо вібрацію залежно від сили (style) при доторку
-        impactOccurred('medium'); // Наприклад, вибір середньої сили вібрації
+        impactOccurred('medium');
     };
 
     return (
