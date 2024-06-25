@@ -43,7 +43,7 @@ const MultiTouchClickerGame: React.FC = () => {
         });
 
         // Trigger impact feedback with current style state
-        impactOccurred(style);
+        impactOccurred('heavy');
     };
 
     const handleTouchEnd = () => {
