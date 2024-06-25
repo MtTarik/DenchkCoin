@@ -5,7 +5,6 @@ import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
 import {
     ImpactOccurredFunction,
-    NotificationOccurredFunction,
     useHapticFeedback,
 } from '@altiore/twa';
 
@@ -20,7 +19,7 @@ const MultiTouchClickerGame: React.FC = () => {
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
 
-    const { impactOccurred } = useHapticFeedback(); // Тільки отримуємо impactOccurred
+    const { impactOccurred } = useHapticFeedback(); // Отримуємо функцію impactOccurred для вібрації
 
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         event.preventDefault();
@@ -34,15 +33,13 @@ const MultiTouchClickerGame: React.FC = () => {
             y: touch.clientY - coinRect.top,
         }));
 
-        setTouchPoints((prevTouchPoints) => [...prevTouchPoints, ...newTouchPoints]);
+        setTouchPoints(newTouchPoints); // Зберігаємо тільки останній дотик
 
-        setCurrentScore((prevScore) => {
-            const newScore = prevScore + touches.length;
-            setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
-            return newScore;
-        });
+        setCurrentScore((prevScore) => prevScore + touches.length);
+        setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
 
-        impactOccurred('heavy'); // Викликаємо impactOccurred при натисканні
+        // Викликаємо вібрацію
+        impactOccurred('medium'); // Наприклад, вибір середньої сили вібрації
     };
 
     return (
