@@ -46,6 +46,9 @@ const MultiTouchClickerGame: React.FC = () => {
         <div className={styles.gameContainer}>
 
             <Header />
+            <button  onClick={() => impactOccurred('medium')}>
+                impactOccurred
+            </button>
 
             <div className={styles.buttonContainer}>
                 <div className={styles.coinButton} onTouchStart={handleTouchStart}>
