@@ -1,6 +1,6 @@
 "use client"
 import { Button, Form, Typography, Select } from 'antd';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import {
     ImpactOccurredFunction,
     NotificationOccurredFunction,
@@ -14,56 +14,16 @@ interface TouchPoint {
 }
 
 const MultiTouchClickerGame: React.FC = () => {
-    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
-    const [style, setStyle] = useState<Parameters<ImpactOccurredFunction>[0]>('light');
-    const [type, setType] = useState<Parameters<NotificationOccurredFunction>[0]>('error');
+    const [impactOccurred] = useHapticFeedback();
+
+    const handleClick = () => {
+        impactOccurred('medium'); // Тип вібрації може бути 'light', 'medium', 'heavy', 'rigid', 'soft'
+    };
 
     return (
-        <>
-            <Typography.Title level={3}>useHapticFeedback</Typography.Title>
-            <Form
-                labelCol={{ span: 6 }}
-                name="HapticFeedbackDemo"
-                layout="horizontal"
-                autoComplete="off"
-            >
-                <Form.Item label="style">
-                    <Select value={style} onChange={value => setStyle(value)}>
-                        <Select.Option value="light">light</Select.Option>
-                        <Select.Option value="medium">medium</Select.Option>
-                        <Select.Option value="heavy">heavy</Select.Option>
-                        <Select.Option value="rigid">rigid</Select.Option>
-                        <Select.Option value="soft">soft</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item>
-                    <Button block type="primary" onClick={() => impactOccurred(style)}>
-                        impactOccurred
-                    </Button>
-                </Form.Item>
-                <Form.Item label="type">
-                    <Select value={type} onChange={value => setType(value)}>
-                        <Select.Option value="error">error</Select.Option>
-                        <Select.Option value="success">success</Select.Option>
-                        <Select.Option value="warning">warning</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item>
-                    <Button
-                        block
-                        type="primary"
-                        onClick={() => notificationOccurred(type)}
-                    >
-                        notificationOccurred
-                    </Button>
-                </Form.Item>
-                <Form.Item>
-                    <Button block type="primary" onClick={() => selectionChanged()}>
-                        selectionChanged
-                    </Button>
-                </Form.Item>
-            </Form>
-        </>
+        <Button type="primary" onClick={handleClick}>
+            Натисніть, щоб вібрувати
+        </Button>
     );
 };
 export default MultiTouchClickerGame;
