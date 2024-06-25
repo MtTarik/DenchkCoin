@@ -8,6 +8,7 @@ import {
     NotificationOccurredFunction,
     useHapticFeedback,
 } from '@vkruglikov/react-telegram-web-app';
+
 interface TouchPoint {
     id: number;
     x: number;
@@ -41,13 +42,13 @@ const MultiTouchClickerGame: React.FC = () => {
             return newScore;
         });
 
-        // Виклик тактильного зворотного зв'язку
         impactOccurred(); // Відчуття удару
         notificationOccurred(); // Відчуття сповіщення
     };
 
     return (
         <div className={styles.gameContainer}>
+
             <Header />
 
             <div className={styles.buttonContainer} onTouchStart={handleTouchStart}>
@@ -73,6 +74,7 @@ const MultiTouchClickerGame: React.FC = () => {
                     </div>
                 </div>
             </div>
+
             <div className={styles.totalScore}>
                 DHT: {totalScore}
             </div>
