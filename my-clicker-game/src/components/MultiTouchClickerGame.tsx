@@ -1,10 +1,9 @@
 "use client"
-import { useState} from 'react';
-import Image from 'next/image';
-import styles from './MultiTouchClickerGame.module.css';
-import Header from "@/components/Header/Header";
+import { Button, Form, Typography, Select } from 'antd';
+import { FC, useState } from 'react';
 import {
     ImpactOccurredFunction,
+    NotificationOccurredFunction,
     useHapticFeedback,
 } from '@vkruglikov/react-telegram-web-app';
 
@@ -15,69 +14,41 @@ interface TouchPoint {
 }
 
 const MultiTouchClickerGame: React.FC = () => {
-    const [currentScore, setCurrentScore] = useState<number>(0);
-    const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
-    const [totalScore, setTotalScore] = useState<number>(0);
-
-    const [impactOccurred] = useHapticFeedback();
-
-    const handleTouchStart = (event: React.TouchEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-
-        const touches = event.touches;
-        const coinRect = event.currentTarget.getBoundingClientRect();
-
-        const newTouchPoints: TouchPoint[] = Array.from(touches).map((touch, index) => ({
-            id: Date.now() + index,
-            x: touch.clientX - coinRect.left,
-            y: touch.clientY - coinRect.top,
-        }));
-
-        setTouchPoints((prevTouchPoints) => [...prevTouchPoints, ...newTouchPoints]);
-
-        setCurrentScore((prevScore) => {
-            const newScore = prevScore + touches.length;
-            setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
-            return newScore;
-        });
-
-        impactOccurred('medium'); // Відтворення середньої вібрації
-
-    };
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
+    const [style, setStyle] = useState<Parameters<ImpactOccurredFunction>[0]>('light');
+    const [type, setType] = useState<Parameters<NotificationOccurredFunction>[0]>('error');
 
     return (
-        <div className={styles.gameContainer}>
-            <Header />
+        <>
+            <Typography.Title level={3}>useHapticFeedback</Typography.Title>
+            <Form
+                labelCol={{ span: 6 }}
+                name="HapticFeedbackDemo"
+                layout="horizontal"
+                autoComplete="off"
+            >
+                <Form.Item label="style">
+                    <Select value={style} onChange={value => setStyle(value as Parameters<ImpactOccurredFunction>[0])}>
+                        <Select.Option value="light">light</Select.Option>
+                        <Select.Option value="medium">medium</Select.Option>
+                        <Select.Option value="heavy">heavy</Select.Option>
+                        <Select.Option value="rigid">rigid</Select.Option>
+                        <Select.Option value="soft">soft</Select.Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item>
+                    <Button block type="primary" onClick={() => impactOccurred(style)}>
+                        impactOccurred
+                    </Button>
+                </Form.Item>
 
-            <div className={styles.buttonContainer}>
-                <button className={styles.coinButton} onTouchStart={handleTouchStart}>
-                    <div className={styles.coinContainer}>
-                        <Image
-                            className={styles.coin}
-                            draggable={false}
-                            src="/coin.png"
-                            alt="Coin"
-                            width={100}
-                            height={100}
-                        />
-                        {touchPoints.map((point) => (
-                            <div
-                                key={point.id}
-                                className={styles.touchPoint}
-                                style={{ left: point.x - 50, top: point.y - 50 }}
-                            >
-                                +1
-                            </div>
-                        ))}
-                    </div>
-                </button>
-            </div>
-
-            <div className={styles.totalScore}>
-                DHT: {totalScore}
-            </div>
-        </div>
+                <Form.Item>
+                    <Button block type="primary" onClick={() => selectionChanged()}>
+                        selectionChanged
+                    </Button>
+                </Form.Item>
+            </Form>
+        </>
     );
 };
-
 export default MultiTouchClickerGame;
