@@ -16,13 +16,13 @@ interface TouchPoint {
 const MultiTouchClickerGame: React.FC = () => {
     const [impactOccurred] = useHapticFeedback();
 
-    const handleClick = () => {
-        impactOccurred('medium'); // Тип вібрації може бути 'light', 'medium', 'heavy', 'rigid', 'soft'
+    const handleClick = (style: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft') => {
+        impactOccurred(style);
     };
 
     return (
-        <Button type="primary" onClick={handleClick}>
-            Натисніть, щоб вібрувати
+        <Button type="primary" onClick={() => handleClick('medium')}>
+            Натисніть, щоб вібрувати (medium)
         </Button>
     );
 };
