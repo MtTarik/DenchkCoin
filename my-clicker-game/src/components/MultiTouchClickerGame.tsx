@@ -5,10 +5,8 @@ import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
 import {
     ImpactOccurredFunction,
-    NotificationOccurredFunction,
-    SelectionChangedFunction,
     useHapticFeedback,
-} from '@vkruglikov/react-telegram-web-app';
+} from '@altiore/twa';
 
 interface TouchPoint {
     id: number;
@@ -21,9 +19,8 @@ const MultiTouchClickerGame: React.FC = () => {
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
 
-    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
     const [style, setStyle] = useState<Parameters<ImpactOccurredFunction>[0]>('light');
-    const [type, setType] = useState<Parameters<NotificationOccurredFunction>[0]>('error');
+    const { impactOccurred, notificationOccurred, selectionChanged } = useHapticFeedback();
 
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         event.preventDefault();
@@ -46,16 +43,16 @@ const MultiTouchClickerGame: React.FC = () => {
         });
 
         // Trigger impact feedback with current style state
-        impactOccurred('light');
+        impactOccurred(style);
     };
 
     const handleTouchEnd = () => {
-        // Trigger notification feedback with current type state
-        notificationOccurred('success');
+        // Trigger notification feedback with current style state
+        notificationOccurred(style);
     };
 
     const handleSelectionChange = () => {
-        // Trigger selection changed feedback
+        // Trigger selection changed feedback with current style state
         selectionChanged();
     };
 
