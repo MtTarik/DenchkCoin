@@ -21,7 +21,7 @@ const MultiTouchClickerGame: React.FC = () => {
 
     const [impactOccurred] = useHapticFeedback();
 
-    const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    const handleTouchStart = (event: React.TouchEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         const touches = event.touches;
@@ -41,7 +41,7 @@ const MultiTouchClickerGame: React.FC = () => {
             return newScore;
         });
 
-        impactOccurred('medium');
+        impactOccurred('medium'); // Відтворення середньої вібрації
 
     };
 
@@ -49,8 +49,8 @@ const MultiTouchClickerGame: React.FC = () => {
         <div className={styles.gameContainer}>
             <Header />
 
-            <div className={styles.buttonContainer} onTouchStart={handleTouchStart}>
-                <div className={styles.coinButton}>
+            <div className={styles.buttonContainer}>
+                <button className={styles.coinButton} onTouchStart={handleTouchStart}>
                     <div className={styles.coinContainer}>
                         <Image
                             className={styles.coin}
@@ -70,7 +70,7 @@ const MultiTouchClickerGame: React.FC = () => {
                             </div>
                         ))}
                     </div>
-                </div>
+                </button>
             </div>
 
             <div className={styles.totalScore}>
