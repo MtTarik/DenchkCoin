@@ -5,7 +5,7 @@ import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
 import {
     useHapticFeedback,
-} from '@vkruglikov/react-telegram-web-app';
+} from '@altiore/twa';
 import { WebAppProvider } from '@altiore/twa';
 
 interface TouchPoint {
@@ -38,6 +38,7 @@ const MultiTouchClickerGame: React.FC = () => {
 
         setCurrentScore((prevScore) => prevScore + touches.length);
         setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
+        impactOccurred('medium'); // Наприклад, вибір середньої сили вібрації
 
         // Не викликаємо вібрацію тут, бо вона має бути при кліці на кнопку "impactOccurred"
     };
