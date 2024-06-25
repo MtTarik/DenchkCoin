@@ -19,8 +19,8 @@ const MultiTouchClickerGame: React.FC = () => {
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
 
-    const { impactOccurred } = useHapticFeedback(); // Отримуємо функцію impactOccurred для вібрації
-
+    const [impactOccurred, notificationOccurred, selectionChanged] =
+        useHapticFeedback();
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         event.preventDefault();
 
