@@ -6,7 +6,7 @@ import Header from "@/components/Header/Header";
 import {
     ImpactOccurredFunction,
     useHapticFeedback,
-} from '@altiore/twa';
+} from '@vkruglikov/react-telegram-web-app';
 
 interface TouchPoint {
     id: number;
