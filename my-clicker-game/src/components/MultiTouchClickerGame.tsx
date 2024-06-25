@@ -6,7 +6,7 @@ import Header from "@/components/Header/Header";
 import {
     ImpactOccurredFunction,
     useHapticFeedback,
-} from '@vkruglikov/react-telegram-web-app';
+} from '@altiore/twa';
 
 interface TouchPoint {
     id: number;
@@ -15,8 +15,11 @@ interface TouchPoint {
 }
 
 const MultiTouchClickerGame: React.FC = () => {
+    const [currentScore, setCurrentScore] = useState<number>(0);
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
-    const { impactOccurred } = useHapticFeedback();
+    const [totalScore, setTotalScore] = useState<number>(0);
+
+    const { impactOccurred } = useHapticFeedback(); // Отримуємо функцію impactOccurred для вібрації
 
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         event.preventDefault();
@@ -30,8 +33,13 @@ const MultiTouchClickerGame: React.FC = () => {
             y: touch.clientY - coinRect.top,
         }));
 
-        setTouchPoints(newTouchPoints);
-        impactOccurred('medium');
+        setTouchPoints(newTouchPoints); // Зберігаємо тільки останній дотик
+
+        setCurrentScore((prevScore) => prevScore + touches.length);
+        setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
+
+        // Викликаємо вібрацію
+        impactOccurred('medium'); // Наприклад, вибір середньої сили вібрації
     };
 
     return (
@@ -39,8 +47,8 @@ const MultiTouchClickerGame: React.FC = () => {
 
             <Header />
 
-            <div className={styles.buttonContainer} onTouchStart={handleTouchStart}>
-                <div className={styles.coinButton}>
+            <div className={styles.buttonContainer}>
+                <div className={styles.coinButton} onTouchStart={handleTouchStart}>
                     <div className={styles.coinContainer}>
                         <Image
                             className={styles.coin}
@@ -60,12 +68,11 @@ const MultiTouchClickerGame: React.FC = () => {
                             </div>
                         ))}
                     </div>
-
                 </div>
             </div>
 
             <div className={styles.totalScore}>
-                Total Score: {touchPoints.length}
+                Total Score: {totalScore}
             </div>
         </div>
     );
