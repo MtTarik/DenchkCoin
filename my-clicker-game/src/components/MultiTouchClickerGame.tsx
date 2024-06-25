@@ -18,7 +18,6 @@ const MultiTouchClickerGame: React.FC = () => {
     const [currentScore, setCurrentScore] = useState<number>(0);
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
-    const [smoothButtonsTransition, setSmoothButtonsTransition] = useState(false);
 
     const [impactOccurred, notificationOccurred, selectionChanged] =
         useHapticFeedback();
@@ -44,14 +43,14 @@ const MultiTouchClickerGame: React.FC = () => {
     };
 
     return (
-        <WebAppProvider options={{ smoothButtonsTransition }}>
+        <WebAppProvider>
             <div
-                onChangeTransition={() => setSmoothButtonsTransition(state => !state)}
                 className={styles.gameContainer}
             >
                 <Header />
 
-                <button onClick={() => impactOccurred('medium')}>
+                <button
+                    onClick={() => impactOccurred('medium')}>
                     impactOccurred
                 </button>
 
