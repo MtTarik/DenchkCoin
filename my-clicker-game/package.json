@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@altiore/twa": "^2.4.21",
     "@vkruglikov/react-telegram-web-app": "^2.1.9",
     "antd": "^5.18.3",
+    "@altiore/twa": "^2.1.1",
     "next": "14.2.2",
     "react": "^18",
     "react-dom": "^18",

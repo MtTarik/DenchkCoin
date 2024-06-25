@@ -5,15 +5,16 @@ import {
     ImpactOccurredFunction,
     NotificationOccurredFunction,
     useHapticFeedback,
-} from '@altiore/twa';
+} from '@altiore/twa'; // Переконайтеся, що цей імпорт вірний для вашої бібліотеки
 
 const MultiTouchClickerGame: React.FC = () => {
-    const [impactOccurred, notificationOccurred, selectionChanged] =
-        useHapticFeedback();
-    const [style, setStyle] =
-        useState<Parameters<ImpactOccurredFunction>[0]>('light');
-    const [type, setType] =
-        useState<Parameters<NotificationOccurredFunction>[0]>('error');
+    const hapticFeedback = useHapticFeedback(); // Отримуємо об'єкт з функціями
+
+    // Деструктуруємо функції з отриманого об'єкту
+    const { impactOccurred, notificationOccurred, selectionChanged } = hapticFeedback;
+
+    const [style, setStyle] = useState<Parameters<ImpactOccurredFunction>[0]>('light');
+    const [type, setType] = useState<Parameters<NotificationOccurredFunction>[0]>('error');
 
     return (
         <>
@@ -63,4 +64,5 @@ const MultiTouchClickerGame: React.FC = () => {
         </>
     );
 };
+
 export default MultiTouchClickerGame;
