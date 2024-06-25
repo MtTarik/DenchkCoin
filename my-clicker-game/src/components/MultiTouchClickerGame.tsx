@@ -28,7 +28,7 @@ const MultiTouchClickerGame: React.FC = () => {
                 autoComplete="off"
             >
                 <Form.Item label="style">
-                    <Select value={style} onChange={value => setStyle(value as Parameters<ImpactOccurredFunction>[0])}>
+                    <Select value={style} onChange={value => setStyle(value)}>
                         <Select.Option value="light">light</Select.Option>
                         <Select.Option value="medium">medium</Select.Option>
                         <Select.Option value="heavy">heavy</Select.Option>
@@ -41,7 +41,22 @@ const MultiTouchClickerGame: React.FC = () => {
                         impactOccurred
                     </Button>
                 </Form.Item>
-
+                <Form.Item label="type">
+                    <Select value={type} onChange={value => setType(value)}>
+                        <Select.Option value="error">error</Select.Option>
+                        <Select.Option value="success">success</Select.Option>
+                        <Select.Option value="warning">warning</Select.Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item>
+                    <Button
+                        block
+                        type="primary"
+                        onClick={() => notificationOccurred(type)}
+                    >
+                        notificationOccurred
+                    </Button>
+                </Form.Item>
                 <Form.Item>
                     <Button block type="primary" onClick={() => selectionChanged()}>
                         selectionChanged
