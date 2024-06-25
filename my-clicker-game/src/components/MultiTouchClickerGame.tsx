@@ -1,5 +1,5 @@
 "use client"
-import { useState} from 'react';
+import {useEffect, useState} from 'react';
 import Image from 'next/image';
 import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
@@ -9,20 +9,29 @@ interface TouchPoint {
     x: number;
     y: number;
 }
+
 const MultiTouchClickerGame: React.FC = () => {
     const [currentScore, setCurrentScore] = useState<number>(0);
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
+    useEffect(() => {
+        const preventZoomAndScroll = (event: TouchEvent) => {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        };
 
+        document.addEventListener('touchmove', preventZoomAndScroll, { passive: false });
+
+        return () => {
+            document.removeEventListener('touchmove', preventZoomAndScroll);
+        };
+    }, []);
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-        event.preventDefault(); // Запобігаємо типовій поведінці торкання
+        event.preventDefault();
 
         const touches = event.touches;
-
-        // Отримуємо позицію контейнера монети відносно видимої частини екрану
         const coinRect = event.currentTarget.getBoundingClientRect();
-
-        // Створюємо масив нових точок торкання з унікальними ідентифікаторами
 
         const newTouchPoints: TouchPoint[] = Array.from(touches).map((touch, index) => ({
             id: Date.now() + index,
@@ -30,17 +39,18 @@ const MultiTouchClickerGame: React.FC = () => {
             y: touch.clientY - coinRect.top,
         }));
 
-        // Оновлюємо стан зі списком точок торкання
         setTouchPoints((prevTouchPoints) => [...prevTouchPoints, ...newTouchPoints]);
 
-        // Збільшуємо поточний рахунок на основі кількості торкань
         setCurrentScore((prevScore) => {
             const newScore = prevScore + touches.length;
             setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
             return newScore;
         });
-    };
 
+        if (navigator.vibrate) {
+            navigator.vibrate(50); // Вібрація на 50 мс
+        }
+    };
 
     return (
         <div className={styles.gameContainer}>
@@ -61,7 +71,7 @@ const MultiTouchClickerGame: React.FC = () => {
                             <div
                                 key={point.id}
                                 className={styles.touchPoint}
-                                style={{left: point.x - 80, top: point.y - 79}}
+                                style={{ left: point.x - 50, top: point.y - 50 }}
                             >
                                 +1
                             </div>
