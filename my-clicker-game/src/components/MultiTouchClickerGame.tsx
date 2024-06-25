@@ -4,9 +4,9 @@ import Image from 'next/image';
 import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
 import {
-    ImpactOccurredFunction,
     useHapticFeedback,
 } from '@vkruglikov/react-telegram-web-app';
+import { WebAppProvider } from '@altiore/twa';
 
 interface TouchPoint {
     id: number;
@@ -18,9 +18,11 @@ const MultiTouchClickerGame: React.FC = () => {
     const [currentScore, setCurrentScore] = useState<number>(0);
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
+    const [smoothButtonsTransition, setSmoothButtonsTransition] = useState(false);
 
     const [impactOccurred, notificationOccurred, selectionChanged] =
         useHapticFeedback();
+
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         event.preventDefault();
 
@@ -38,46 +40,50 @@ const MultiTouchClickerGame: React.FC = () => {
         setCurrentScore((prevScore) => prevScore + touches.length);
         setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
 
-        // Викликаємо вібрацію
-        impactOccurred('medium'); // Наприклад, вибір середньої сили вібрації
+        // Не викликаємо вібрацію тут, бо вона має бути при кліці на кнопку "impactOccurred"
     };
 
     return (
-        <div className={styles.gameContainer}>
+        <WebAppProvider options={{ smoothButtonsTransition }}>
+            <div
+                onChangeTransition={() => setSmoothButtonsTransition(state => !state)}
+                className={styles.gameContainer}
+            >
+                <Header />
 
-            <Header />
-            <button  onClick={() => impactOccurred('medium')}>
-                impactOccurred
-            </button>
+                <button onClick={() => impactOccurred('medium')}>
+                    impactOccurred
+                </button>
 
-            <div className={styles.buttonContainer}>
-                <div className={styles.coinButton} onTouchStart={handleTouchStart}>
-                    <div className={styles.coinContainer}>
-                        <Image
-                            className={styles.coin}
-                            draggable={false}
-                            src="/coin.png"
-                            alt="Coin"
-                            width={100}
-                            height={100}
-                        />
-                        {touchPoints.map((point) => (
-                            <div
-                                key={point.id}
-                                className={styles.touchPoint}
-                                style={{ left: point.x - 50, top: point.y - 50 }}
-                            >
-                                +1
-                            </div>
-                        ))}
+                <div className={styles.buttonContainer}>
+                    <div className={styles.coinButton} onTouchStart={handleTouchStart}>
+                        <div className={styles.coinContainer}>
+                            <Image
+                                className={styles.coin}
+                                draggable={false}
+                                src="/coin.png"
+                                alt="Coin"
+                                width={100}
+                                height={100}
+                            />
+                            {touchPoints.map((point) => (
+                                <div
+                                    key={point.id}
+                                    className={styles.touchPoint}
+                                    style={{ left: point.x - 50, top: point.y - 50 }}
+                                >
+                                    +1
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className={styles.totalScore}>
-                Total Score: {totalScore}
+                <div className={styles.totalScore}>
+                    Total Score: {totalScore}
+                </div>
             </div>
-        </div>
+        </WebAppProvider>
     );
 };
 
