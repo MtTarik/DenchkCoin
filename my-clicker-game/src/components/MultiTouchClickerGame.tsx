@@ -48,7 +48,7 @@ const MultiTouchClickerGame: React.FC = () => {
 
     const handleTouchEnd = () => {
         // Trigger notification feedback with current style state
-        notificationOccurred(style);
+        notificationOccurred('success');
     };
 
     const handleSelectionChange = () => {
