@@ -5,7 +5,6 @@ import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
 import {
     ImpactOccurredFunction,
-    NotificationOccurredFunction,
     useHapticFeedback,
 } from '@vkruglikov/react-telegram-web-app';
 
@@ -20,8 +19,7 @@ const MultiTouchClickerGame: React.FC = () => {
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
 
-    const [impactOccurred, notificationOccurred, selectionChanged] =
-        useHapticFeedback();
+    const [impactOccurred] = useHapticFeedback();
 
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         event.preventDefault();
@@ -43,11 +41,12 @@ const MultiTouchClickerGame: React.FC = () => {
             return newScore;
         });
 
+        impactOccurred('medium');
+
     };
 
     return (
         <div className={styles.gameContainer}>
-
             <Header />
 
             <div className={styles.buttonContainer} onTouchStart={handleTouchStart}>
@@ -71,9 +70,6 @@ const MultiTouchClickerGame: React.FC = () => {
                             </div>
                         ))}
                     </div>
-                    <button   onClick={() => selectionChanged()}>
-                        selectionChanged
-                    </button>
                 </div>
             </div>
 
