@@ -4,7 +4,6 @@ import Image from 'next/image';
 import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
 import {
-    ImpactOccurredFunction,
     useHapticFeedback,
 } from '@altiore/twa';
 
@@ -19,7 +18,6 @@ const MultiTouchClickerGame: React.FC = () => {
     const [touchPoints, setTouchPoints] = useState<TouchPoint[]>([]);
     const [totalScore, setTotalScore] = useState<number>(0);
 
-    const [style, setStyle] = useState<Parameters<ImpactOccurredFunction>[0]>('light');
     const { impactOccurred, notificationOccurred, selectionChanged } = useHapticFeedback();
 
     const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -41,9 +39,8 @@ const MultiTouchClickerGame: React.FC = () => {
             setTotalScore((prevTotalScore) => prevTotalScore + touches.length);
             return newScore;
         });
+        impactOccurred('heavy'); notificationOccurred('success');
 
-        // Trigger impact feedback with current style state
-        impactOccurred('heavy');
     };
 
     const handleTouchEnd = () => {
@@ -51,10 +48,6 @@ const MultiTouchClickerGame: React.FC = () => {
         notificationOccurred('success');
     };
 
-    const handleSelectionChange = () => {
-        // Trigger selection changed feedback with current style state
-        selectionChanged();
-    };
 
     return (
         <div className={styles.gameContainer}>
