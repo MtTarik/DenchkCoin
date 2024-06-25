@@ -3,7 +3,7 @@
 import MultiTouchClickerGame from '@/components/MultiTouchClickerGame';
 import Head from 'next/head';
 import styles from './page.module.css';
-import {WebAppProvider} from "@vkruglikov/react-telegram-web-app";
+import { useThemeParams, WebAppProvider } from '@altiore/twa';
 
 export default function Home() {
 
