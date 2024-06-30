@@ -35,7 +35,7 @@ const MultiTouchClickerGame: React.FC = () => {
             return newScore;
         });
 
-        impactOccurred(style); x// Викликаємо impactOccurred при натисканні
+        impactOccurred(style);
         impactOccurred('heavy'); // Викликаємо impactOccurred при натисканні
     };
 
