@@ -4,8 +4,6 @@ import Image from 'next/image';
 import styles from './MultiTouchClickerGame.module.css';
 import Header from "@/components/Header/Header";
 import {
-    ImpactOccurredFunction,
-    NotificationOccurredFunction,
     useHapticFeedback,
 } from '@altiore/twa';
 interface TouchPoint {
@@ -37,7 +35,7 @@ const MultiTouchClickerGame: React.FC = () => {
             return newScore;
         });
 
-        impactOccurred(style); // Викликаємо impactOccurred при натисканні
+        impactOccurred(style); x// Викликаємо impactOccurred при натисканні
         impactOccurred('heavy'); // Викликаємо impactOccurred при натисканні
     };
 
