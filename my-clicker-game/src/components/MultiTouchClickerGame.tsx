@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import styles from './MultiTouchClickerGame.module.css';
+
 import Header from "@/components/Header/Header";
 import {
     useHapticFeedback,
